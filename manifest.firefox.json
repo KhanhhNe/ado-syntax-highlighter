@@ -37,6 +37,17 @@
         "*://*.visualstudio.com/*"
       ],
       "js": [
+        "diff/diff.min.js",
+        "ado_api_bridge.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "*://*.dev.azure.com/*",
+        "*://*.visualstudio.com/*"
+      ],
+      "js": [
         "browser-polyfill.min.js",
         "prism/prism.min.js",
         "content_script.js"

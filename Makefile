@@ -8,6 +8,7 @@ FIREFOX_ZIP := $(DIST_DIR)/firefox-extension.zip
 # --- Source Files ---
 COMMON_FILES := \
 	background.js \
+	ado_api_bridge.js \
 	content_script.js \
 	custom_styles.css \
 	options.html \
@@ -36,6 +37,8 @@ define build-extension
 	@mkdir -p $(1)
 	@cp $(COMMON_FILES) $(1)/
 	@cp -r $(COMMON_DIRS) $(1)/
+	@mkdir -p $(1)/diff
+	@cp diff/diff.js $(1)/diff/
 	@mkdir -p $(1)/prism
 	@cp prism/prism.js $(1)/prism/
 	@echo "Generating scoped prism.css for $(1)..."
@@ -49,7 +52,9 @@ define build-extension
 	@cp $(2) $(1)/manifest.json
 	@echo "Minifying assets for $(1)..."
 	@npx terser browser-polyfill.js -o $(1)/browser-polyfill.min.js --comments false
+	@npx terser diff/diff.js -o $(1)/diff/diff.min.js --comments false
 	@npx terser prism/prism.js -o $(1)/prism/prism.min.js --comments false
+	@rm $(1)/diff/diff.js
 	@rm $(1)/prism/prism.js
 endef
 
